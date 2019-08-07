@@ -1,6 +1,14 @@
-const url = 'https://randomuser.me/api/?results=12';
+/**
+ * Variables that will used throught this app.
+ */
+const url = 'https://randomuser.me/api/?results=12&lego';
 const card = document.createElement("div");
 card.classList.add("card");
+const gallleryDiv = document.querySelector("#gallery")
+
+/**
+ * Creates the search bar.
+ */
 const searchDiv = document.querySelector(".search-container")
 const form = document.createElement("form");
 form.setAttribute("action","#")
@@ -11,16 +19,63 @@ form.innerHTML = `
     <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
 `;
 
+/**
+ * variables to create and append the modal div
+ */
+const modalDiv = document.createElement("div");
+modalDiv.classList.add("modal");
+document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
 
+/**
+ * generates the html for the modal
+ * @param {*} data - data to be processed
+ */
+
+function generateModal(data)  {
+    data.forEach(function (person) {
+     modalDiv.innerHTML = `
+    <div class="modal">
+    <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+    <div class="modal-info-container">
+        <img class="modal-img" src="${person.picture.large}" alt="profile picture">
+        <h3 id="name" class="modal-name cap">${person.name.first} ${person.name.last}</h3>
+        <p class="modal-text">${person.email}</p>
+        <p class="modal-text cap">${person.location.city}</p>
+        <hr>
+        <p class="modal-text">${person.cell}</p>
+        <p class="modal-text">${person.location.street}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
+        <p class="modal-text">Birthday: ${person.dob.date}</p>
+    </div>
+    <div class="modal-btn-container">
+    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+    </div>
+    </div>
+    `;
+    })
+}
+
+/**
+ * Fetch request returns a promised, parsed into json then calls two functions.
+ */
 fetch(url)
     .then(response => response.json())
     .then(function (data) {
         const people = data.results
         generateHTML(people)
+        generateModal(people)
     })
 
+/**
+ * function that generates HMTL to display employee cards
+ * @param {*} data - data to be processed
+ */
 function generateHTML(data) { 
     data.forEach(function (person) {
+        // const email = person.email;
+        // const newEmail = email.split(".");
+        // console.log(newEmail)
+        
         card.innerHTML = `
         <div class="card-img-container">
         <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
@@ -31,8 +86,35 @@ function generateHTML(data) {
         <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
         </div>
         `;
-        document.getElementById("gallery").appendChild(card.cloneNode(true))
+        gallleryDiv.appendChild(card.cloneNode(true))
     })
 }
 
+// const input = document.querySelector("input")
     
+// function filterNames() {
+    // document.getElementsByClassName("pagination")[0].innerHTML = ' ';          
+    // let filterValue = document.getElementById('search-input').value.toUpperCase();   
+    // let ul = document.getElementById('names');                                 
+    // let li = ul.querySelectorAll('li.student-item');                          
+//     const searchResults = [];                                                  
+//     for(let i = 0; i < li.length; i++) {
+//        li[i].style.display = 'none';                                          
+//        let h3 = li[i].getElementsByTagName('h3')[0];                           
+       
+//        if (h3.innerHTML.toUpperCase().includes(filterValue)) { 
+//           searchResults.push(li[i]);                                           
+//           li[i].style.display = ''                                             
+//           } 
+          
+//        if(searchResults.length === 0) {
+//           noNamesDiv.style.display = ''                                        
+//        } else {
+//           noNamesDiv.style.display = 'none'                                    
+//        }
+       
+//        }                                            
+//  }
+
+// input.addEventListener('keyup', filterNames);                                 
+// button.addEventListener('click', filterNames);   
