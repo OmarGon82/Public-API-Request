@@ -1,7 +1,7 @@
 /**
  * Variables that will used throught this app.
  */
-const url = 'https://randomuser.me/api/?results=12&lego';
+const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
 const card = document.createElement("div");
 card.classList.add("card");
 const gallleryDiv = document.querySelector("#gallery")
@@ -55,6 +55,32 @@ function generateModal(data)  {
     })
 }
 
+// const openModalButton = document.querySelectorAll(".card");
+const closeModalButton = document.querySelector("modal button");
+const modalOverlay = document.querySelector(".modal");
+modalOverlay.style.display = "none";
+//now modal appears but at the bottom of the page and its always the last one card
+document.getElementById('gallery').addEventListener("click", function(event) {
+    const e = event.target;
+    if(e.className !== "gallery") {
+    modalOverlay.style.display = ''
+   }
+})
+
+//getting close. It will close if i set e target to !== modal button but other buttons trigger the event
+document.querySelector(".modal").addEventListener("click", function(event) {
+    const e = event.target
+    if(e.className !== "modal") {
+    modalOverlay.style.display = "none"
+   }
+})
+
+
+// closeModalButton.forEach( button => {
+//     button.addEventListener("click", () => {
+//         modalOverlay.style.display = ''
+//     })
+// })
 /**
  * Fetch request returns a promised, parsed into json then calls two functions.
  */
