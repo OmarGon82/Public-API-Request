@@ -1,11 +1,21 @@
+
 /**
  * Variables that will used throught this app.
  */
 const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
-const card = document.createElement("div");
-card.classList.add("card");
 
 const gallleryDiv = document.querySelector("#gallery")
+
+/**
+ * Fetch request returns a promised, parsed into json then calls two functions.
+ */
+fetch(url)
+    .then(response => response.json())
+    .then(function (data) {
+        const people = data.results
+        generateHTML(people)
+        generateModal(people)
+    })
 
 /**
  * Creates the search bar.
@@ -33,19 +43,19 @@ document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
  */
 
 function generateModal(data)  {
-    data.forEach(function (person) {
-     modalDiv.innerHTML = `
-    <div class="modal ${person.name.first}">
+    
+    modalDiv.innerHTML = `
+    <div class="modal">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
     <div class="modal-info-container">
-        <img class="modal-img" src="${person.picture.large}" alt="profile picture">
-        <h3 id="name" class="modal-name cap">${person.name.first} ${person.name.last}</h3>
-        <p class="modal-text">${person.email}</p>
-        <p class="modal-text cap">${person.location.city}</p>
+        <img class="modal-img" src="${data.picture.thumbnail}" alt="profile picture">
+        <h3 id="name" class="modal-name cap">${data.name.first} ${data.name.last}</h3>
+        <p class="modal-text">${data.email}</p>
+        <p class="modal-text cap">${data.location.city}</p>
         <hr>
-        <p class="modal-text">${person.cell}</p>
-        <p class="modal-text">${person.location.street}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
-        <p class="modal-text">Birthday: ${person.dob.date}</p>
+        <p class="modal-text">${data.cell}</p>
+        <p class="modal-text">${data.location.street}, ${data.location.city}, ${data.location.state} ${data.location.postcode}</p>
+        <p class="modal-text">Birthday: ${data.dob.date}</p>
     </div>
     <div class="modal-btn-container">
     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
@@ -53,8 +63,6 @@ function generateModal(data)  {
     </div>
     </div>
     `;
-    })
-
 }
     
 // const openModalButton = document.querySelectorAll(".card");
@@ -67,11 +75,11 @@ modalOverlay.style.display = "none";
 gallleryDiv.addEventListener("click", function(event) {
 const e = event.target;
 if(e.className.includes("card")) {
-    
+    console.log("gallery div")
     modalOverlay.style.display = ""
 }
 })
-      
+     
 
 //getting close. It will close if i set e target to !== modal button but other buttons trigger the event
 document.querySelector(".modal-container").addEventListener("click", function(event) {
@@ -87,16 +95,6 @@ document.querySelector(".modal-container").addEventListener("click", function(ev
 //         modalOverlay.style.display = ''
 //     })
 // })
-/**
- * Fetch request returns a promised, parsed into json then calls two functions.
- */
-fetch(url)
-    .then(response => response.json())
-    .then(function (data) {
-        const people = data.results
-        generateHTML(people)
-        generateModal(people)
-    })
 
 /**
  * function that generates HMTL to display employee cards
@@ -104,10 +102,13 @@ fetch(url)
  */
 
 function generateHTML(data) {
-    data.forEach(function (person) {
+    data.forEach(function (person, index) {
         // const email = person.email;
         // const newEmail = email.split(".");
         // console.log(newEmail)
+        const card = document.createElement("div");
+        card.classList.add("card");
+
         card.innerHTML = `
         <div class="card-img-container">
         <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
@@ -118,8 +119,10 @@ function generateHTML(data) {
         <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
         </div>
         `;
-        gallleryDiv.appendChild(card.cloneNode(true))
-        
+        gallleryDiv.appendChild(card)
+        card.addEventListener("click", () => {
+        generateModal(person)
+        })
     })
 }
 
