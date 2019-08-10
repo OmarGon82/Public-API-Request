@@ -42,20 +42,20 @@ document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
  * @param {*} data - data to be processed
  */
 
-function generateModal(data)  {
+function generateModal(person)  {
     
     modalDiv.innerHTML = `
     <div class="modal">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
     <div class="modal-info-container">
-        <img class="modal-img" src="${data.picture.thumbnail}" alt="profile picture">
-        <h3 id="name" class="modal-name cap">${data.name.first} ${data.name.last}</h3>
-        <p class="modal-text">${data.email}</p>
-        <p class="modal-text cap">${data.location.city}</p>
+        <img class="modal-img" src="${person.picture.thumbnail}" alt="profile picture">
+        <h3 id="name" class="modal-name cap">${person.name.first} ${person.name.last}</h3>
+        <p class="modal-text">${person.email}</p>
+        <p class="modal-text cap">${person.location.city}</p>
         <hr>
-        <p class="modal-text">${data.cell}</p>
-        <p class="modal-text">${data.location.street}, ${data.location.city}, ${data.location.state} ${data.location.postcode}</p>
-        <p class="modal-text">Birthday: ${data.dob.date}</p>
+        <p class="modal-text">${person.cell}</p>
+        <p class="modal-text">${person.location.street}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
+        <p class="modal-text">Birthday: ${person.dob.date}</p>
     </div>
     <div class="modal-btn-container">
     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
@@ -102,7 +102,7 @@ document.querySelector(".modal-container").addEventListener("click", function(ev
  */
 
 function generateHTML(data) {
-    data.forEach(function (person, index) {
+    data.forEach(function (person) {
         // const email = person.email;
         // const newEmail = email.split(".");
         // console.log(newEmail)
