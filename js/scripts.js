@@ -4,6 +4,7 @@
 const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
 const card = document.createElement("div");
 card.classList.add("card");
+
 const gallleryDiv = document.querySelector("#gallery")
 
 /**
@@ -23,7 +24,7 @@ form.innerHTML = `
  * variables to create and append the modal div
  */
 const modalDiv = document.createElement("div");
-modalDiv.classList.add("modal");
+modalDiv.classList.add("modal-container");
 document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
 
 /**
@@ -34,7 +35,7 @@ document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
 function generateModal(data)  {
     data.forEach(function (person) {
      modalDiv.innerHTML = `
-    <div class="modal">
+    <div class="modal ${person.name.first}">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
     <div class="modal-info-container">
         <img class="modal-img" src="${person.picture.large}" alt="profile picture">
@@ -53,24 +54,29 @@ function generateModal(data)  {
     </div>
     `;
     })
-}
 
+}
+    
 // const openModalButton = document.querySelectorAll(".card");
-const closeModalButton = document.querySelector("modal button");
-const modalOverlay = document.querySelector(".modal");
+const closeModalButton = document.getElementById("#modal-close-btn");
+const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
 //now modal appears but at the bottom of the page and its always the last one card
-document.getElementById('gallery').addEventListener("click", function(event) {
-    const e = event.target;
-    if(e.className !== "gallery") {
-    modalOverlay.style.display = ''
-   }
+
+
+gallleryDiv.addEventListener("click", function(event) {
+const e = event.target;
+if(e.className.includes("card")) {
+    
+    modalOverlay.style.display = ""
+}
 })
+      
 
 //getting close. It will close if i set e target to !== modal button but other buttons trigger the event
-document.querySelector(".modal").addEventListener("click", function(event) {
+document.querySelector(".modal-container").addEventListener("click", function(event) {
     const e = event.target
-    if(e.className !== "modal") {
+    if(e.className === "modal-close-btn") {
     modalOverlay.style.display = "none"
    }
 })
@@ -96,12 +102,12 @@ fetch(url)
  * function that generates HMTL to display employee cards
  * @param {*} data - data to be processed
  */
-function generateHTML(data) { 
+
+function generateHTML(data) {
     data.forEach(function (person) {
         // const email = person.email;
         // const newEmail = email.split(".");
         // console.log(newEmail)
-        
         card.innerHTML = `
         <div class="card-img-container">
         <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
@@ -113,6 +119,7 @@ function generateHTML(data) {
         </div>
         `;
         gallleryDiv.appendChild(card.cloneNode(true))
+        
     })
 }
 
