@@ -68,16 +68,6 @@ function generateModal(person)  {
 const closeModalButton = document.getElementById("#modal-close-btn");
 const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
-//now modal appears but at the bottom of the page and its always the last one card
-
-
-gallleryDiv.addEventListener("click", function(event) {
-const e = event.target;
-if(e.className.includes("card")) {
-    console.log("gallery div")
-    modalOverlay.style.display = ""
-}
-})
      
 
 //getting close. It will close if i set e target to !== modal button but other buttons trigger the event
@@ -120,6 +110,7 @@ function generateHTML(data) {
         `;
         gallleryDiv.appendChild(card)
         card.addEventListener("click", () => {
+        modalOverlay.style.display = ""
         generateModal(person)
         })
     })
