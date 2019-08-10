@@ -4,7 +4,7 @@
 const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
 const gallleryDiv = document.querySelector("#gallery") 
 /**
- * Fetch request returns a promised, parsed into json then calls two functions.
+ * Fetch request returns a promised, parsed into json then calls the generateHTML function.
  */
 fetch(url)
     .then(response => response.json())
@@ -101,7 +101,8 @@ function generateModal(person, i)  {
         
     nextBtn.addEventListener("click", () => {
         if(i >= 0) {
-            console.log(data[i])
+           modalDiv.innerHTML = ""
+           generateModal(person[i % people.length])
          }
         })
      
