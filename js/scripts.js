@@ -14,7 +14,6 @@ fetch(url)
     .then(function (data) {
         const people = data.results
         generateHTML(people)
-        generateModal(people)
     })
 
 /**
