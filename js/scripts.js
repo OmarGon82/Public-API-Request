@@ -1,11 +1,9 @@
-
 /**
  * Variables that will used throught this app.
  */
 const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
-
 const gallleryDiv = document.querySelector("#gallery")
-
+let nextBtton; 
 /**
  * Fetch request returns a promised, parsed into json then calls two functions.
  */
@@ -35,14 +33,15 @@ form.innerHTML = `
 const modalDiv = document.createElement("div");
 modalDiv.classList.add("modal-container");
 document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
-
+const closeModalButton = document.getElementById("#modal-close-btn");
+const modalOverlay = document.querySelector(".modal-container");
+modalOverlay.style.display = "none";
 /**
  * generates the html for the modal
  * @param {*} data - data to be processed
  */
 
-function generateModal(person)  {
-    
+function generateModal(person, index)  {
     modalDiv.innerHTML = `
     <div class="modal">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -62,15 +61,20 @@ function generateModal(person)  {
     </div>
     </div>
     `;
+    const PrevButton = document.getElementById("modal-prev")
+    if (index === 0) {
+    PrevButton.addEventListener("click", () => {
+            alert("hurray")
+        
+    })
+ }
 }
-    
-// const openModalButton = document.querySelectorAll(".card");
-const closeModalButton = document.getElementById("#modal-close-btn");
-const modalOverlay = document.querySelector(".modal-container");
-modalOverlay.style.display = "none";
-     
 
-//getting close. It will close if i set e target to !== modal button but other buttons trigger the event
+
+ 
+/**
+ * closes Modal when X is clicked
+ */
 document.querySelector(".modal-container").addEventListener("click", function(event) {
     const e = event.target
     if(e.className === "modal-close-btn") {
@@ -79,18 +83,14 @@ document.querySelector(".modal-container").addEventListener("click", function(ev
 })
 
 
-// closeModalButton.forEach( button => {
-//     button.addEventListener("click", () => {
-//         modalOverlay.style.display = ''
-//     })
-// })
+
+
 
 /**
  * function that generates HMTL to display employee cards
  * @param {*} data - data to be processed
  */
-
-function generateHTML(data) {
+function generateHTML(data, index) {
     data.forEach(function (person) {
         // const email = person.email;
         // const newEmail = email.split(".");
@@ -111,10 +111,13 @@ function generateHTML(data) {
         gallleryDiv.appendChild(card)
         card.addEventListener("click", () => {
         modalOverlay.style.display = ""
-        generateModal(person)
+        generateModal(person,index)
         })
     })
 }
+     
+
+
 
 // const input = document.querySelector("input")
     
