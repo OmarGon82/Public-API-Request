@@ -2,17 +2,48 @@
  * Variables that will used throught this app.
  */
 const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
-const gallleryDiv = document.querySelector("#gallery")
-let nextBtton; 
+const gallleryDiv = document.querySelector("#gallery") 
 /**
  * Fetch request returns a promised, parsed into json then calls two functions.
  */
 fetch(url)
     .then(response => response.json())
-    .then(function (data) {
+    .then( data => {
         const people = data.results
         generateHTML(people)
     })
+
+/**
+ * function that generates HMTL to display employee cards
+ * @param {*} data - data to be processed
+ */
+function generateHTML(data) {
+    data.forEach(function (person, i) {
+        // const email = person.email;
+        // const newEmail = email.split(".");
+        // console.log(newEmail)
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+        <div class="card-img-container">
+        <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
+        </div>
+        <div class="card-info-container">
+        <h3 id="name" class="card-name cap">${person.name.first} ${person.name.last}</h3>
+        <p class="card-text">${person.email}</p>
+        <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
+        </div>
+        `;
+        gallleryDiv.appendChild(card)
+        card.addEventListener("click", () => {
+        modalOverlay.style.display = ""
+        generateModal(person,i)
+        })
+    })
+}
+     
+
+
 
 /**
  * Creates the search bar.
@@ -37,11 +68,11 @@ const closeModalButton = document.getElementById("#modal-close-btn");
 const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
 /**
- * generates the html for the modal
- * @param {*} data - data to be processed
+ * generates the modal for the the employee card that has been clicked.
+ * @param {*} person object of the 
+ * @param {*} i  index
  */
-
-function generateModal(person, index)  {
+function generateModal(person, i)  {
     modalDiv.innerHTML = `
     <div class="modal">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -61,14 +92,21 @@ function generateModal(person, index)  {
     </div>
     </div>
     `;
-    const PrevButton = document.getElementById("modal-prev")
-    if (index === 0) {
-    PrevButton.addEventListener("click", () => {
-            alert("hurray")
+    const prevBtn = document.getElementById("modal-prev");
+    const nextBtn = document.getElementById("modal-next");
+
+    prevBtn.addEventListener("click", () => {
+
+        })
         
-    })
- }
-}
+    nextBtn.addEventListener("click", () => {
+        if(i >= 0) {
+            console.log(data[i])
+         }
+        })
+     
+    }
+        
 
 
  
@@ -86,36 +124,7 @@ document.querySelector(".modal-container").addEventListener("click", function(ev
 
 
 
-/**
- * function that generates HMTL to display employee cards
- * @param {*} data - data to be processed
- */
-function generateHTML(data, index) {
-    data.forEach(function (person) {
-        // const email = person.email;
-        // const newEmail = email.split(".");
-        // console.log(newEmail)
-        const card = document.createElement("div");
-        card.classList.add("card");
 
-        card.innerHTML = `
-        <div class="card-img-container">
-        <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
-        </div>
-        <div class="card-info-container">
-        <h3 id="name" class="card-name cap">${person.name.first} ${person.name.last}</h3>
-        <p class="card-text">${person.email}</p>
-        <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
-        </div>
-        `;
-        gallleryDiv.appendChild(card)
-        card.addEventListener("click", () => {
-        modalOverlay.style.display = ""
-        generateModal(person,index)
-        })
-    })
-}
-     
 
 
 
