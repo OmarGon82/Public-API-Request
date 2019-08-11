@@ -24,6 +24,7 @@ fetch(url)
  */
 function generateHTML(data) {
     data.forEach(function (person, i) {
+        const email = person.email.replace(/\.\w\w\w\w\w?\w?\w?/,"")
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
@@ -32,7 +33,7 @@ function generateHTML(data) {
         </div>
         <div class="card-info-container">
         <h3 id="name" class="card-name cap">${person.name.first} ${person.name.last}</h3>
-        <p class="card-text">${person.email}</p>
+        <p class="card-text">${email}</p>
         <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
         </div>
         `;
@@ -74,6 +75,7 @@ modalOverlay.style.display = "none";
  * @param {*} i  index
  */
 function generateModal(person, i)  {
+    const birthday = person.dob.date.slice(0,10)
     modalDiv.innerHTML = `
     <div class="modal">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -85,7 +87,7 @@ function generateModal(person, i)  {
         <hr>
         <p class="modal-text">${person.cell}</p>
         <p class="modal-text">${person.location.street}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
-        <p class="modal-text">Birthday: ${person.dob.date}</p>
+        <p class="modal-text">Birthday: ${birthday}</p>
     </div>
     <div class="modal-btn-container">
     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
