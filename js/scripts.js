@@ -6,10 +6,11 @@ const gallleryDiv = document.querySelector("#gallery")
 /**
  * Fetch request returns a promised, parsed into json then calls the generateHTML function.
  */
+let people;
 fetch(url)
     .then(response => response.json())
     .then( data => {
-        const people = data.results
+        people = data.results
         generateHTML(people)
     })
 
@@ -64,7 +65,6 @@ form.innerHTML = `
 const modalDiv = document.createElement("div");
 modalDiv.classList.add("modal-container");
 document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
-const closeModalButton = document.getElementById("#modal-close-btn");
 const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
 /**
@@ -94,19 +94,29 @@ function generateModal(person, i)  {
     `;
     const prevBtn = document.getElementById("modal-prev");
     const nextBtn = document.getElementById("modal-next");
-
     prevBtn.addEventListener("click", () => {
-
+        if(i >= 0) {
+            modalDiv.innerHTML = ""
+            generateModal(people[i - 1],  i - 1)
+        }
         })
+        if( i === 0) {
+           
+            prevBtn.remove()
+        }
         
     nextBtn.addEventListener("click", () => {
         if(i >= 0) {
            modalDiv.innerHTML = ""
-           generateModal(person[i % people.length])
-         }
-        })
-     
+           generateModal(people[i + 1], i + 1)
+        }
+
+    })
+    if( i === 11) {
+        nextBtn.remove()
+       
     }
+}
         
 
 
@@ -114,9 +124,9 @@ function generateModal(person, i)  {
 /**
  * closes Modal when X is clicked
  */
-document.querySelector(".modal-container").addEventListener("click", function(event) {
+modalDiv.addEventListener("click", function(event) {
     const e = event.target
-    if(e.className === "modal-close-btn") {
+    if(e.tagName === "STRONG") {
     modalOverlay.style.display = "none"
    }
 })
@@ -132,10 +142,10 @@ document.querySelector(".modal-container").addEventListener("click", function(ev
 // const input = document.querySelector("input")
     
 // function filterNames() {
-    // document.getElementsByClassName("pagination")[0].innerHTML = ' ';          
-    // let filterValue = document.getElementById('search-input').value.toUpperCase();   
-    // let ul = document.getElementById('names');                                 
-    // let li = ul.querySelectorAll('li.student-item');                          
+//     document.getElementsByClassName("pagination")[0].innerHTML = ' ';          
+//     let filterValue = document.getElementById('search-input').value.toUpperCase();   
+//     let ul = document.getElementById('names');                                 
+//     let li = ul.querySelectorAll('li.student-item');                          
 //     const searchResults = [];                                                  
 //     for(let i = 0; i < li.length; i++) {
 //        li[i].style.display = 'none';                                          
