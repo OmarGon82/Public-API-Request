@@ -3,7 +3,7 @@
  * selected the gallery div
  */
 const url = 'https:/randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
-const gallleryDiv = document.querySelector("#gallery");
+const galleryDiv = document.querySelector("#gallery");
 
 /**
  * Fetch request returns a promised, parsed into json then calls the generateHTML function.
@@ -38,7 +38,7 @@ function generateHTML(data) {
         <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
         </div>
         `;
-        gallleryDiv.appendChild(card)
+        galleryDiv.appendChild(card)
         card.addEventListener("click", () => {
         modalOverlay.style.display = ""
         generateModal(person,i)
