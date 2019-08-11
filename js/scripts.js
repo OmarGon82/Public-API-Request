@@ -65,7 +65,7 @@ form.innerHTML = `
  */
 const modalDiv = document.createElement("div");
 modalDiv.classList.add("modal-container");
-document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
+document.querySelector("body").insertBefore(modalDiv,galleryDiv.nextSibling);
 const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
 
@@ -140,7 +140,7 @@ const noNamesDiv = document.createElement("div");
 noNamesDiv.textContent = "Sorry no matches found...";
 noNamesDiv.style.fontFamily = "'Courier New', Courier, monospace";
 noNamesDiv.style.color = "white";  
-gallleryDiv.append(noNamesDiv);     
+galleryDiv.append(noNamesDiv);     
 noNamesDiv.style.display = "none";
 const input = document.querySelector("input");
 
