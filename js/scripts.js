@@ -69,7 +69,6 @@ document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
 const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
 
-
 /**
  * generates the modal for the the employee card that has been clicked.
  * @param {*} person object holding the json data.
