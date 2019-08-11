@@ -134,10 +134,12 @@ modalDiv.addEventListener("click", function(event) {
  * Created a div to display a message if the search has no results.
  */
 const noNamesDiv = document.createElement("div");
-noNamesDiv.textContent = "Sorry no matches found..."  
-gallleryDiv.append(noNamesDiv)     
-noNamesDiv.style.display = "none"
-const input = document.querySelector("input")
+noNamesDiv.textContent = "Sorry no matches found...";
+noNamesDiv.style.fontFamily = "'Courier New', Courier, monospace";
+noNamesDiv.style.color = "white";  
+gallleryDiv.append(noNamesDiv);     
+noNamesDiv.style.display = "none";
+const input = document.querySelector("input");
 
 /**
  * filters names and displays results. If no matches it displays a message.
