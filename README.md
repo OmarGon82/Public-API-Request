@@ -10,5 +10,5 @@ I made the following changes to the css styling
 2. Changed the the card background and text colors(for on hoover as well)
 3. Changed the font for the h1 text.
 4. Changed the background, buttons (including close button), text color, borders for the modal.
-
+5. All the user images are also lego heads because I thought it would make the project more fun.
 In the future I would like to update this app by getting more than 12 users and adding some pagination.
