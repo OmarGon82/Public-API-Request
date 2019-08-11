@@ -21,6 +21,7 @@ fetch(url)
 /**
  * function that generates HMTL to display employee cards
  * @param {*} data - the people object will passed.
+ * used regex to take out the last name of the email address so all text fits in the
  */
 function generateHTML(data) {
     data.forEach(function (person, i) {
@@ -73,6 +74,7 @@ modalOverlay.style.display = "none";
  * generates the modal for the the employee card that has been clicked.
  * @param {*} person object holding the json data.
  * @param {*} i  index
+ * reformatted the DOB to show only the date
  */
 function generateModal(person, i)  {
     const birthday = person.dob.date.slice(0,10)
