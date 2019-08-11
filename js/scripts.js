@@ -76,6 +76,7 @@ modalOverlay.style.display = "none";
  * reformatted the DOB to show only the date
  */
 function generateModal(person, i)  {
+    const email = person.email.replace(/\.\w\w\w\w\w?\w?\w?/,"")
     const birthday = person.dob.date.slice(0,10)
     modalDiv.innerHTML = `
     <div class="modal">
@@ -83,7 +84,7 @@ function generateModal(person, i)  {
     <div class="modal-info-container">
         <img class="modal-img" src="${person.picture.thumbnail}" alt="profile picture">
         <h3 id="name" class="modal-name cap">${person.name.first} ${person.name.last}</h3>
-        <p class="modal-text">${person.email}</p>
+        <p class="modal-text">${email}</p>
         <p class="modal-text cap">${person.location.city}</p>
         <hr>
         <p class="modal-text">${person.cell}</p>
