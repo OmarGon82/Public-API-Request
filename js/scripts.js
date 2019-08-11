@@ -1,10 +1,13 @@
 /**
- * Variables that will used throught this app.
+ * api url 
+ * selected the gallery div
  */
-const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
-const gallleryDiv = document.querySelector("#gallery") 
+const url = 'https:/randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
+const gallleryDiv = document.querySelector("#gallery");
+
 /**
  * Fetch request returns a promised, parsed into json then calls the generateHTML function.
+ * initializedd the people variable so it can be accessed later.
  */
 let people;
 fetch(url)
@@ -13,18 +16,16 @@ fetch(url)
         people = data.results
         generateHTML(people)
     })
+    .catch (err => (Error('looks like something wrong', err)));
 
 /**
  * function that generates HMTL to display employee cards
- * @param {*} data - data to be processed
+ * @param {*} data - the people object will passed.
  */
 function generateHTML(data) {
     data.forEach(function (person, i) {
-        // const email = person.email;
-        // const newEmail = email.split(".");
-        // console.log(newEmail)
         const card = document.createElement("div");
-        card.classList.add("card");
+        card.className = "card";
         card.innerHTML = `
         <div class="card-img-container">
         <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
@@ -43,8 +44,6 @@ function generateHTML(data) {
     })
 }
      
-
-
 
 /**
  * Creates the search bar.
@@ -67,9 +66,11 @@ modalDiv.classList.add("modal-container");
 document.querySelector("body").insertBefore(modalDiv,gallleryDiv.nextSibling);
 const modalOverlay = document.querySelector(".modal-container");
 modalOverlay.style.display = "none";
+
+
 /**
  * generates the modal for the the employee card that has been clicked.
- * @param {*} person object of the 
+ * @param {*} person object holding the json data.
  * @param {*} i  index
  */
 function generateModal(person, i)  {
@@ -118,9 +119,6 @@ function generateModal(person, i)  {
     }
 }
         
-
-
- 
 /**
  * closes Modal when X is clicked
  */
@@ -132,38 +130,47 @@ modalDiv.addEventListener("click", function(event) {
 })
 
 
+/**
+ * Created a div to display a message if the search has no results.
+ */
+const noNamesDiv = document.createElement("div");
+noNamesDiv.textContent = "Sorry no matches found..."  
+gallleryDiv.append(noNamesDiv)     
+noNamesDiv.style.display = "none"
+const input = document.querySelector("input")
 
-
-
-
-
-
-
-// const input = document.querySelector("input")
+/**
+ * filters names and displays results. If no matches it displays a message.
+ */
     
-// function filterNames() {
-//     document.getElementsByClassName("pagination")[0].innerHTML = ' ';          
-//     let filterValue = document.getElementById('search-input').value.toUpperCase();   
-//     let ul = document.getElementById('names');                                 
-//     let li = ul.querySelectorAll('li.student-item');                          
-//     const searchResults = [];                                                  
-//     for(let i = 0; i < li.length; i++) {
-//        li[i].style.display = 'none';                                          
-//        let h3 = li[i].getElementsByTagName('h3')[0];                           
-       
-//        if (h3.innerHTML.toUpperCase().includes(filterValue)) { 
-//           searchResults.push(li[i]);                                           
-//           li[i].style.display = ''                                             
-//           } 
+function filterNames() {
+    const card = document.querySelectorAll(".card")
+    const namesArr = Array.from(card)       
+    let filterValue = document.getElementById('search-input').value.toUpperCase();                            
+    const searchResults = [];                                                  
+    for(let i = 0; i < namesArr.length; i++) {
+       card[i].style.display = 'none';                                          
+       let h3 = card[i].getElementsByTagName('h3')[0];                           
+           
+       if (h3.innerHTML.toUpperCase().includes(filterValue)) { 
+          searchResults.push(card[i]);                                           
+          card[i].style.display = '' 
+                              
+          } 
           
-//        if(searchResults.length === 0) {
-//           noNamesDiv.style.display = ''                                        
-//        } else {
-//           noNamesDiv.style.display = 'none'                                    
-//        }
+       if(searchResults.length === 0) {
+          noNamesDiv.style.display = ''                                        
+       } else {
+          noNamesDiv.style.display = 'none'                                    
+       }
        
-//        }                                            
-//  }
-
-// input.addEventListener('keyup', filterNames);                                 
-// button.addEventListener('click', filterNames);   
+    }
+        
+}
+                                        
+/**
+ * Event listeners for the search bar. Both take call the filterNames function.
+ */
+const searchBtn = document.querySelector(".search-submit"); 
+input.addEventListener('keyup', filterNames);                                 
+searchBtn.addEventListener('click', filterNames);   
