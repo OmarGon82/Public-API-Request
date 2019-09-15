@@ -2,7 +2,7 @@
  * api url 
  * selected the gallery div
  */
-const url = 'https:/randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
+const url = 'https://randomuser.me/api/?results=12&nat=us,cd,fr,gb,sp&lego';
 const galleryDiv = document.querySelector("#gallery");
 
 /**
