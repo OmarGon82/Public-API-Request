@@ -89,7 +89,7 @@ function generateModal(person, i)  {
         <p class="modal-text cap">${person.location.city}</p>
         <hr>
         <p class="modal-text">${person.cell}</p>
-        <p class="modal-text">${person.location.street.name}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
+        <p class="modal-text">${person.location.street.number} ${person.location.street.name}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
         <p class="modal-text">Birthday: ${birthday}</p>
     </div>
     <div class="modal-btn-container">
