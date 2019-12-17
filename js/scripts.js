@@ -14,7 +14,6 @@ fetch(url)
     .then(response => response.json())
     .then( data => {
         people = data.results
-        console.log(people)
         generateHTML(people)
     })
     .catch (err => (Error('looks like something wrong', err)));
