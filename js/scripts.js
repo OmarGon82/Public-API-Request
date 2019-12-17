@@ -14,6 +14,7 @@ fetch(url)
     .then(response => response.json())
     .then( data => {
         people = data.results
+        console.log(people)
         generateHTML(people)
     })
     .catch (err => (Error('looks like something wrong', err)));
@@ -30,12 +31,12 @@ function generateHTML(data) {
         card.className = "card";
         card.innerHTML = `
         <div class="card-img-container">
-        <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
+            <img class="card-img" src=${person.picture.thumbnail} alt="profile picture">
         </div>
         <div class="card-info-container">
-        <h3 id="name" class="card-name cap">${person.name.first} ${person.name.last}</h3>
-        <p class="card-text">${email}</p>
-        <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
+            <h3 id="name" class="card-name cap">${person.name.first} ${person.name.last}</h3>
+            <p class="card-text">${email}</p>
+            <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
         </div>
         `;
         galleryDiv.appendChild(card)
@@ -88,7 +89,7 @@ function generateModal(person, i)  {
         <p class="modal-text cap">${person.location.city}</p>
         <hr>
         <p class="modal-text">${person.cell}</p>
-        <p class="modal-text">${person.location.street}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
+        <p class="modal-text">${person.location.street.name}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
         <p class="modal-text">Birthday: ${birthday}</p>
     </div>
     <div class="modal-btn-container">
