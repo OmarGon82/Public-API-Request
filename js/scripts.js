@@ -7,7 +7,7 @@ const galleryDiv = document.querySelector("#gallery");
 
 /**
  * Fetch request returns a promised, parsed into json then calls the generateHTML function.
- * initializedd the people variable so it can be accessed later.
+ * initialized the people variable so it can be accessed later.
  */
 let people;
 fetch(url)
@@ -19,7 +19,7 @@ fetch(url)
     .catch (err => (Error('looks like something wrong', err)));
 
 /**
- * function that generates HMTL to display employee cards
+ * function that generates HTML to display employee cards
  * @param {*} data - the people object will passed.
  * used regex to take out the last name of the email address so all text fits in the
  */
@@ -57,7 +57,7 @@ form.setAttribute("method", "get")
 searchDiv.appendChild(form)
 form.innerHTML = `
     <input type="search" id="search-input" class="search-input" placeholder="Search...">
-    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
+    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
 `;
 
 /**
@@ -103,6 +103,7 @@ function generateModal(person, i)  {
         if(i >= 0) {
             modalDiv.innerHTML = ""
             generateModal(people[i - 1],  i - 1)
+        console.log(people[i - 1],  i - 1)
         }
         })
         if( i === 0) {
@@ -114,6 +115,7 @@ function generateModal(person, i)  {
         if(i >= 0) {
            modalDiv.innerHTML = ""
            generateModal(people[i + 1], i + 1)
+           console.log(people[i + 1],  i + 1)
         }
 
     })
